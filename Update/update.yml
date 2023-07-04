@@ -1,0 +1,23 @@
+---
+- name: Update and Upgrade
+  hosts: hostserver42-002.lan
+  become: true
+  vars_files:
+    - vault.yml
+
+  tasks:
+    - name: Update package lists
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Perform system upgrade
+      apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+    # Use the vault variable in your tasks
+    - name: Print the password
+      debug:
+        var: my_password
+
